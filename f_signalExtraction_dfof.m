@@ -17,9 +17,7 @@ Y_fres=Y_r-C;                   %residuals from full ROI cf to Raw movie - used 
 signal_inferred=C;                      % spatial weighting on the ROI pixels, background substraction, and denoising
 signal_filtered=Y_r;                    % spatial weighting on the ROI pixels, background substraction
 
-
-%binarize weights of pixels to fraction "weight_thresh" of max (if max
-%weight is 0.6, and thresh is .1, set weights > 0.06-->1, < 0.06--> 0
+% Binarize weights of pixels to fraction "weight_thresh" of max (if max weight is 0.6, and thresh is .1, set weights > 0.06-->1, < 0.06--> 0
 weight_thresh=.2;
 A_raw_mask=A;
 for idx = 1:nr
@@ -34,11 +32,10 @@ end
 A_contour=sparse(tempI, tempJ, zeros(1,length(tempI))+1, d1*d2, nr);
 numberLabel=1;
 contourColor=[1 0 0];
-f_plot_raw_ROIContour( full(A_contour),d1,d2,numberLabel,contourColor );
+f_plot_raw_ROIContour( full(A_contour),d1,d2,numberLabel );
 title('binarized rawpixel regions','fontsize',16,'fontweight','bold'); drawnow;
 
 nA_contour = full((sum(A_contour.*A_contour)))';  % energy of each row
-
 signal_raw=spdiags(nA_contour,0,nr,nr)\(A_contour'*(Y-full(b)*f));    % no weighting on the ROI pixels, background substraction
 
 signal_inferred_DC=zeros(nr,1);
