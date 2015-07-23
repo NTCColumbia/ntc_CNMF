@@ -1,6 +1,4 @@
-
-
-% The code extracts results from NMF algorithm.
+% The code extracts results from CNMF algorithm.
 % This code is written by Weijian Yang and Darcy S. Peterka
 
 % note:
@@ -10,30 +8,28 @@
 % signal_spike: detected spike event
 
 %% Data processing
-
-f_structname=aaMC_Single_VS_500um_02229_Jun_2015_15_35_46;
+f_structname=aaMC_Single_VS_500um_02203_Jul_2015_00_06_29;
 im_inf=imfinfo(f_structname.datawrite.movieFileName);
 d2=im_inf(1).Width;
 d1=im_inf(1).Height;
 blah=size(im_inf);
-   T= blah(1);
+T= blah(1);
+d1=f_structname.datawrite.d1;
+d2=f_structname.datawrite.d2;
+T=f_structname.datawrite.T;
    
 % plot ROI contour
+cellID=[1 10 23 24];
 numberLabel=1;
 contourColor=[1 0 0];
-weigh_image=f_plotROIContour( f_structname.A,d1,d2,numberLabel,contourColor );
+weigh_image=f_plotROIContour( f_structname.A(:,cellID),d1,d2,numberLabel,contourColor );
 
 % View results ROI by ROI
 %f_view_patches_mod(Y,A,C,b,f,d1,d2);
-ROIn=size(f_structname.A,2);
-
-
-
-
 
 %% Plot the signals
 normalization=1; % if 0, no normalization, otherwise normalize each trace relative to its max value
-separation=2;
+separation=4;
 labelling=1;
-
+f_plotActivityTrace( f_structname.signal_raw(cellID,:), f_structname.signal_filtered(cellID,:), f_structname.signal_inferred(cellID,:), f_structname.datawrite.frameRate, normalization, separation, labelling);
 file_view_patches_mod(f_structname.signal_raw,f_structname.signal_filtered,f_structname.signal_inferred,f_structname.A,f_structname.C,f_structname.b,f_structname.f,d1,d2, f_structname.datawrite.movieFileName);
