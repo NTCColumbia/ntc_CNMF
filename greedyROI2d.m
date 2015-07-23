@@ -9,7 +9,7 @@ function [basis, trace, center, data] = greedyROI2d(data, K, params)
 %params     tuning parameter for fine-tuning the shape (optional)
 %           params.nIter: number of iterations for shape tuning (default 5)
 %           params.gSig: variance of Gaussian kernel to use (default 5)
-%           params.gSiz: size of kernel (default 41)
+%           params.gSiz: size of kernel (default 11)
 %
 %Output:
 %basis      M x N x K matrix, location of each neuron
@@ -17,7 +17,7 @@ function [basis, trace, center, data] = greedyROI2d(data, K, params)
 %center     K x 2 matrix, inferred center of each neuron
 %res        M x N x T movie, residual
 %
-%Authur: Yuanjun Gao
+%Author: Yuanjun Gao
 
 [M, N, T] = size(data);
 
