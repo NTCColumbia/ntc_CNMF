@@ -25,7 +25,7 @@ tmpjnk=strcat(movieFileName,'_merged_')
 savedstruct=strcat(tmpjnk,appe);
 savedfile=strcat(tmpjnk,'_merged_',appe,'_cNMF.mat');
 else
-savedstruct=strcat(movieFileName,appe);
+savedstruct=strcat(movieFileName,'_',appe);
 savedfile=strcat(movieFileName,'_',appe,'_cNMF.mat');
 end
 vtmp=genvarname(savedstruct);
