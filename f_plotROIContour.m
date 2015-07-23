@@ -1,6 +1,4 @@
 function [weigh_image]=f_plotROIContour( A,d1,d2,numberLabel,contourColor )
-%F_PLOTROICONTOUR Summary of this function goes here
-%   Detailed explanation goes here
 
 nr = size(A,2);   % ROI number
 centroid = zeros(nr,2);
