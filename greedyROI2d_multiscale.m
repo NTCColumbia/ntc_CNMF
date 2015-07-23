@@ -5,11 +5,14 @@ function [basis, trace, center, data] = greedyROI2d_multiscale(data, K, K2, para
 %
 %Input:
 %data       M x N x T movie, raw data, each column is a vectorized movie
-%K          number of neurons to extract
+%K          number of neurons with large spatial scale to extract
+%K2         number of neurons with small spatial scale to extract
 %params     tuning parameter for fine-tuning the shape (optional)
 %           params.nIter: number of iterations for shape tuning (default 5)
-%           params.gSig: variance of Gaussian kernel to use (default 5)
-%           params.gSiz: size of kernel (default 41)
+%           params.gSig: variance of Gaussian kernel to use for large scale ROIs (default 5)
+%           params.gSiz: size of kernel for large scale ROIs (default 11)
+%           params.gSigSmallScale: variance of Gaussian kernel to use for small scale ROIs (default 2)
+%           params.gSizSmallScale: size of kernel for small scale ROIs (default 6)
 %
 %Output:
 %basis      M x N x K matrix, location of each neuron
@@ -17,7 +20,8 @@ function [basis, trace, center, data] = greedyROI2d_multiscale(data, K, K2, para
 %center     K x 2 matrix, inferred center of each neuron
 %res        M x N x T movie, residual
 %
-%Authur: Yuanjun Gao
+%Author: Yuanjun Gao
+%Modified by Weijian Yang
 
 [M, N, T] = size(data);
 
@@ -40,10 +44,10 @@ elseif length(params.gSig) == 1, gSig = params.gSig + zeros(1,2); end
 if ~isfield(params, 'gSiz'), gSiz = [11, 11];
 elseif length(params.gSiz) == 1, gSiz = params.gSiz + zeros(1,2); end
 
-if ~isfield(params, 'gSigSmallScale'), gSigSmallScale = [5, 5]; 
+if ~isfield(params, 'gSigSmallScale'), gSigSmallScale = [2, 2]; 
 elseif length(params.gSigSmallScale) == 1, gSigSmallScale = params.gSigSmallScale + zeros(1,2); end
 
-if ~isfield(params, 'gSizSmallScale'), gSizSmallScale = [11, 11];
+if ~isfield(params, 'gSizSmallScale'), gSizSmallScale = [6, 6];
 elseif length(params.gSizSmallScale) == 1, gSizSmallScale = params.gSizSmallScale + zeros(1,2); end
 
 if ~isfield(params, 'nIter'), nIter = 5; 
