@@ -2,10 +2,6 @@ function [C,f,Y_res,P,LD] = update_temporal_components(Y,A,b,Cin,fin,P,LD)
 
 % update temporal components and background given spatial components
 
-% fudge is a system bias term. current arpfit slightly underestimates tau
-% for all neurons.  This term applies a system wide correction.
-fudge=.95;
-
 [d,T] = size(Y);
 if ~isfield(P,'method'); method = 'constrained_foopsi'; else method = P.method; end
 if ~isfield(P,'restimate_g'); restimate_g = 1; else restimate_g = P.restimate_g; end % re-estimate time constant (only with constrained foopsi)
@@ -35,7 +31,7 @@ else
     nA = sum(A.^2);
     YrA = Y'*A - Cin'*(A'*A);
     A_temp = A;
-    A_temp(P.saturationPixel,:) = 0;
+    A_temp(P.saturationPixel,:) = 0;               % A_temp removes the saturation pixels
     YrA_temp = Y'*A_temp - Cin'*(A_temp'*A_temp);
     if strcmpi(method,'constrained_foopsi') || strcmpi(method,'MCEM_foopsi') 
         P.gn = cell(nr,1);
@@ -70,14 +66,15 @@ for iter = 1:ITER
                     if restimate_g
                         [cc,cb,c1,gn,sn,~] = constrained_foopsi(YrA(:,ii)/nA(ii),[],[],[],[],options);
                     else
-                        display('using fudge...');
+                        if P.gammaSystemBias ~= 1
+                            display('Applying system bias for AR coefficient...');
+                        end
                         if isempty (Y(find(A_temp(:,ii)),:))
-                            g_temp=P.gamma{ii};
+                            temp=arpfit(Y(find(A(:,ii)),:),options.p);
                         else
                             temp=arpfit(Y(find(A_temp(:,ii)),:),options.p);
-                            g_temp=temp.g;
                         end
-                        g_temp=fudge*g_temp;
+                        g_temp=P.gammaSystemBias*temp.g;
                         [cc,cb,c1,gn,sn,~] = constrained_foopsi(YrA(:,ii)/nA(ii),[],[],g_temp,[],options);
                     end
                     gd = max(roots([1,-gn']));  % decay time constant for initial concentration
