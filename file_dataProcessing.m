@@ -7,7 +7,7 @@
 % signal_raw: df/f data, no spatial weighting on the ROI pixels, whether background substraction is done depends on user input parameter "backgroundSubtractionforRaw" 
 
 %% Data processing
-% please load the saved .mat file, and input the data structure in the following line
+% please load the saved .mat file into Matlab workspace, and input the data structure in the following line
 f_structname=YourMovieName_20150723_173922;
 im_inf=imfinfo(f_structname.datawrite.movieFileName);
 d2=im_inf(1).Width;
