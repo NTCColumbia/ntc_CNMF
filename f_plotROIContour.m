@@ -1,42 +1,25 @@
-function [weigh_image]=f_plotROIContour( A,d1,d2,numberLabel,contourColor,ind_neur )
+function [weigh_image]=f_plotROIContour( A,d1,d2,numberLabel,contourColor )
 %F_PLOTROICONTOUR Summary of this function goes here
 %   Detailed explanation goes here
 
 nr = size(A,2);   % ROI number
 centroid = zeros(nr,2);
-if nargin < 6
-    ind_neur = ones(nr,1);
-    layerNumber = 1;
-else
-    switchLayer = find(ind_neur==2,1);
-    layerNumber = 2;
-end
 
 %% plot contour itself
 figure; hold on;
 for idx=1:nr
     B=bwboundaries(full(reshape(A(:,idx),d1,d2))); 
     centroid(idx,:)=[(max(B{1}(:,2))+min(B{1}(:,2)))/2 (max(B{1}(:,1))+min(B{1}(:,1)))/2];
-    plot(B{1}(:,2), B{1}(:,1),'Linewidth',2, 'color', contourColor(ind_neur(idx),:));
-    p=patch(B{1}(:,2), B{1}(:,1), contourColor(ind_neur(idx),:));
+    plot(B{1}(:,2), B{1}(:,1),'Linewidth',2, 'color', contourColor);
+    p=patch(B{1}(:,2), B{1}(:,1), contourColor);
     set(p,'FaceAlpha', 0.3);
     set(p,'edgeColor', [1 0 0]); 
     set(gcf, 'Renderer', 'OpenGL');
 end
 
-if numberLabel==1 & layerNumber == 1
+if numberLabel==1
     for idx=1:nr
         text(centroid(idx,1), centroid(idx,2), num2str(idx),'fontsize',10);
-    end
-end
-
-if numberLabel==1 & layerNumber == 2
-    for idx=1:switchLayer-1
-        text(centroid(idx,1), centroid(idx,2), num2str(idx),'fontsize',10);
-    end
-    for idx=switchLayer:nr
-        text(centroid(idx,1), centroid(idx,2), ['b' num2str(idx-switchLayer+1)],'fontsize',10);
-%        text(centroid(idx,1), centroid(idx,2), [num2str(idx)],'fontsize',10);
     end
 end
 
@@ -51,15 +34,8 @@ temp=sum(A,2);
 temp=reshape(temp, d1, d2);
 weigh_image=temp;
 imagesc(temp);
-% hold on;
-% for idx=1:nr
-%     B=bwboundaries(full(reshape(A(:,idx),d1,d2))); 
-%     centroid(idx,:)=[(max(B{1}(:,2))+min(B{1}(:,2)))/2 (max(B{1}(:,1))+min(B{1}(:,1)))/2];
-%     if ind_neur(idx)==2
-%         plot(B{1}(:,2), B{1}(:,1),'Linewidth',1.5, 'color', [0 0 0]);
-%     else
-%         plot(B{1}(:,2), B{1}(:,1),'Linewidth',1.5, 'color', [1 1 1]);        
-%     end
-% end
+daspect([256 200 1]);
+colormap('parula');
+
 end
 
