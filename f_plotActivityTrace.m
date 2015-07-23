@@ -3,8 +3,7 @@ function f_plotActivityTrace( signal_raw, signal_filtered, signal_inferred, fram
 %   Detailed explanation goes here
 t=1/frameRate*(1:size(signal_raw,2));
 
-figure;
-hold on;
+figure; hold on;
 
 if normalization ~=0
     separation=1.5;
