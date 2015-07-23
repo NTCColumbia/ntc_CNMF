@@ -1,4 +1,5 @@
 function [A,b] = update_spatial_components(Y,C,f,A_,P)
+% single ellipse coverage search for initial spatial components growth
 
 % update spatial components and background through BPDN
 
