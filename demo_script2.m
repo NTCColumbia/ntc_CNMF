@@ -9,7 +9,7 @@ clearvars %-except
 write_data_out=1;                   % user input: set to 1 to save out important params as a mat file; set to zero to just display, and not save to external
 
 %------- tiff file information -------
-movieFileName = 'Single_150um_024.tif';    % user input: movie file name (can contain the name of folder)
+movieFileName = 'YourMovieName.tif';    % user input: movie file name (can contain the name of folder)
 sframe=1;						    % user input: first frame to read
 num2read=3000;					    % user input: number of frames to read
 int = 1:(num2read-sframe);          % user input: start frame and end frame to be processed (may want to restrict this due to memory issues.  If larger than number of frames, will be set to max frames)
