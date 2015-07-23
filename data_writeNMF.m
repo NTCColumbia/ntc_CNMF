@@ -1,7 +1,7 @@
 function [ output_args ] = data_writeNMF(Datawrite,weigh_image,A, Ain, C, Cin, b, f, signal_raw, signal_filtered, signal_inferred,Y_fres,use_merged  )
 %data_write_NMF(Datawrite,A, Ain, C, Cin, b, f, signal_raw, signal_filtered, signal_inferred)
 %Quick function to allow saving of cNMF output parameters and traces into a unique file name and structure to allow for "easy"
-%reloading into matlab and file comparisons.  
+%reloading into matlab.  
 %Written by Darcy S. Peterka
 
 appe=fix(clock);
