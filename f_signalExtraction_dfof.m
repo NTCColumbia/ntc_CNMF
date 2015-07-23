@@ -1,8 +1,6 @@
 % this program extract df/f
 
 function [ signal_inferred, signal_filtered, signal_raw, signal_inferred_DC, signal_filtered_DC, signal_raw_DC,Y_fres ] = f_signalExtraction_dfof(Y,A,C,b,f,d1,d2,backgroundSubtractionforRaw,baselineRatio)
-%MYDATAPROCESSING_SIGNALEXTRACTION Summary of this function goes here
-%   Detailed explanation goes here
 
 T = size(C,2);
 if ndims(Y) == 3
