@@ -1,5 +1,5 @@
 % The code extracts results from CNMF algorithm.
-% This code is written by Eftychios A. Pnevmatikakis, Liam Paninski, Weijian Yang and Darcy S. Peterka
+% This code is written by Weijian Yang and Darcy S. Peterka
 
 % note:
 % signal_inferred: df/f data, spatial weighting on the ROI pixels, unmixing, background substraction, and denoising
