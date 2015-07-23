@@ -5,10 +5,8 @@ function [ output_args ] = data_writeNMF(Datawrite,weigh_image,A, Ain, C, Cin, b
 %reloading into matlab and file comparisons.  Many better ways to deal with
 %this, but this is what I have today...6/10/15 Darcy S. Peterka
 
-appe=datetime;
-appe=strrep(char(appe), ' ', '_');
-appe=strrep(char(appe), ':', '_');
-appe=strrep(char(appe), '-', '_');
+appe=fix(clock);
+appe=[num2str(appe(1)) num2str(appe(2),'%02.0f') num2str(appe(3),'%02.0f') '_' num2str(appe(4),'%02.0f') num2str(appe(5),'%02.0f') num2str(appe(6),'%02.0f')];  
 tmpstruct.datawrite=Datawrite;
 tmpstruct.A=A;
 tmpstruct.Ain=Ain;
@@ -22,14 +20,14 @@ tmpstruct.signal_inferred=signal_inferred;
 tmpstruct.weigh_image=weigh_image;
 tmpstruct.Y_fres=Y_fres;
 
-[~,tmpjunkn, ~]=fileparts(tmpstruct.datawrite.movieFileName);
+[~,movieFileName, ~]=fileparts(tmpstruct.datawrite.movieFileName);
 if use_merged==0;
-tmpjnk=strcat(tmpjunkn,'_merged_')
+tmpjnk=strcat(movieFileName,'_merged_')
 savedstruct=strcat(tmpjnk,appe);
 savedfile=strcat(tmpjnk,'_merged_',appe,'_cNMF.mat');
 else
-savedstruct=strcat(tmpjunkn,appe);
-savedfile=strcat(tmpjunkn,appe,'_cNMF.mat');
+savedstruct=strcat(movieFileName,appe);
+savedfile=strcat(movieFileName,'_',appe,'_cNMF.mat');
 end
 vtmp=genvarname(savedstruct);
 eval([vtmp '= tmpstruct;']);
