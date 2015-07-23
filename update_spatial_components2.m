@@ -1,4 +1,5 @@
-function [A,b] = update_spatial_components2(Y,C,f,A,P)
+function [A,b] = update_spatial_components2(Y,C,f,A,P)               
+% stepwise dilation growth for spatial component growth
 
 % update spatial components and background through BPDN
 
