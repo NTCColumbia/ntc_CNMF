@@ -1,4 +1,4 @@
-% The code implements a method for simultaneous source extraction and spike inference from large scale calcium imaging movies.
+% The code implements a method for simultaneous source extraction from large scale calcium imaging movies.
 % The algorithm is presented in more detail here: http://arxiv.org/abs/1409.2903
 % This code is written by Eftychios A. Pnevmatikakis and Liam Paninski, 
 % followed by modification by Weijian Yang and Darcy S. Peterka, 2015
