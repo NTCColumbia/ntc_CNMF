@@ -7,7 +7,7 @@ if ~isfield(P,'method'); method = 'constrained_foopsi'; else method = P.method; 
 if ~isfield(P,'restimate_g'); restimate_g = 1; else restimate_g = P.restimate_g; end % re-estimate time constant (only with constrained foopsi)
 if ~isfield(P,'temporal_iter'); ITER = 1; else ITER = P.temporal_iter; end
 if isfield(P,'interp'); Y_interp = P.interp; else Y_interp = sparse(d,T); end
-if ~isfield(P,'gammaSystemBias') P.gammaSystemBias=1; 
+if ~isfield(P,'gammaSystemBias') P.gammaSystemBias=1; end
 
 mis_data = find(Y_interp);
 Y(mis_data) = Y_interp(mis_data);
