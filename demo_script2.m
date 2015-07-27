@@ -62,6 +62,9 @@ gammaSystemBias = 0.96;                           % user input: (default: 1) sys
 merge_thr = 0.8;                               % user input: (default: 0.8) threshold for merging ROI.  The higher number, the more alike the temporal components must be to merge ROIs
 use_merged=1;                                  % set to 1 to merge related ROIs                                               
 
+%------- Generate Processed Movie -------
+viewProcessedMovie = 0;                        % user input: to view the processed movie? 1--Yes, 0--No
+
 % Restore all parameters in a single struct for easy passing to file writing utility.  
 % datawrite structure is not used by anything else.
 % Need to run "dataProcessing.m" to generate additional signals and save all these parameters  
@@ -219,8 +222,10 @@ else
     f_view_patches_mod(Yr,A,C,b,f,d1,d2);
 end   
 
-%% construct vedio 
-param.skip_frame = 1;
-param.ind = [1 2 3 4];
-param.make_avi = 0;
-make_patch_video(Am,Cm,b,f,Yr,d1,d2,param);
+%% construct vedio
+if viewProcessedMovie
+    param.skip_frame = 1;
+    param.ind = [1 2 3 4];
+    param.make_avi = 0;
+    make_patch_video(Am,Cm,b,f,Yr,d1,d2,param);
+end
