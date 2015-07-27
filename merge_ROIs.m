@@ -1,6 +1,3 @@
-
-
-
 function [A,C,nr,merged_ROIs,P] = merge_ROIs(Y_res,A,b,C,f,P)
 
 % merging of spatially overlapping components that have highly correlated tmeporal activity
@@ -48,7 +45,7 @@ for i = 1:length(cor)
     fm = find(MC(:,i));
     for j1 = 1:length(fm)
         for j2 = j1+1:length(fm)
-            cor(i) = cor(i) + C_corr(j1,j2);
+            cor(i) = cor(i) + C_corr(fm(j1),fm(j2));
         end
     end
 end
@@ -68,25 +65,23 @@ end
 for i = 1:nm
     merged_ROIs{i} = find(MC(:,ind(i)));
     nC = sqrt(sum(C(merged_ROIs{i},:).^2,2));
-    %original line below.  Got tird of scaling by temporal componant power
-    %to keep spatioal weights consistent with unmerged ROIs
-    %A_merged(:,i) = sum(A(:,merged_ROIs{i})*spdiags(nC,0,length(nC),length(nC)),2);
-    A_merged(:,i) = sum( A(:,merged_ROIs{i}),2);    
-    Y_res = Y_res + A(:,merged_ROIs{i})*C(merged_ROIs{i},:)+b*f;
-    [cc,~,Y_res,Ptemp] = update_temporal_components(real(Y_res),A_merged(:,i),b,median(spdiags(nC,0,length(nC),length(nC))\C(merged_ROIs{i},:)),f,P);
-    if strcmpi(P.method,'constrained_foopsi')
+    A_merged(:,i) = sum(A(:,merged_ROIs{i})*spdiags(nC,0,length(nC),length(nC)),2);    
+    Y_res = Y_res + A(:,merged_ROIs{i})*C(merged_ROIs{i},:);
+    [cc,~,~,Ptemp] = update_temporal_components(Y_res,A_merged(:,i),b,median(spdiags(nC,0,length(nC),length(nC))\C(merged_ROIs{i},:)),f,P);
+    [aa,bb] = update_spatial_components(Y_res,cc,f,A_merged(:,i),P);
+    A_merged(:,i) = aa;
+    [cc,~,~,Ptemp] = update_temporal_components(Y_res,A_merged(:,i),bb,cc,f,P);
+    if strcmpi(P.method,'constrained_foopsi') || strcmpi(P.method,'MCEM_foopsi')
         P_merged.gn{i} = Ptemp.gn{1};
         P_merged.b{i} = Ptemp.b{1};
         P_merged.c1{i} = Ptemp.c1{1};
         P_merged.neuron_sn{i} = Ptemp.neuron_sn{1};
     end
-%     [~,srt] = sort(A_merged(:,i),'descend');
-%     ff = srt(1:mc);
-%     [cc,~] = lagrangian_foopsi_temporal(Y_res(ff,:),A_merged(ff,i),T*P.sn(ff).^2,G);
+    
     C_merged(i,:) = cc;
-%     if i < nm
-%         Y_res = Y_res - A_merged(:,i)*cc;
-%     end
+    if i < nm
+        Y_res = Y_res - A_merged(:,i)*cc;
+    end
 end
 
 neur_id = unique(cell2mat(merged_ROIs));
@@ -95,7 +90,7 @@ A = [A(:,1:nr),A_merged,A(:,nr+1:end)];
 C = [C(1:nr,:);C_merged;C(nr+1:end,:)];
 A(:,neur_id) = [];
 C(neur_id,:) = [];
-if strcmpi(P.method,'constrained_foopsi')
+if strcmpi(P.method,'constrained_foopsi') || strcmpi(P.method,'MCEM_foopsi')
     P.b(neur_id) = [];
     P.b(nr - length(neur_id) + (1:nm)) = P_merged.b;
     P.gn(neur_id) = [];
