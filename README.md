@@ -4,7 +4,7 @@ The CNMF code is written by Eftychios A. Pnevmatikakis and Liam Paninski, with i
 
 The demo script are written by Eftychios A. Pnevmatikakis, Liam Paninski, Weijian Yang and Darcy S. Peterka, 2015.
 
-Use "demo_script2.m" to run the CNMF algorithm.
+Use "demo_script2.m" to run the CNMF algorithm. "demoMovie.tif" is a calcium imaging movie for demonstration of the code.  
 
 Use "dataProcessing.m" to extract results after "demo_script2.m" is ran. 
 
