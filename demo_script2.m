@@ -9,9 +9,9 @@ clearvars %-except
 write_data_out=1;                   % user input: set to 1 to save out important params as a mat file; set to zero to just display, and not save to external
 
 %------- tiff file information -------
-movieFileName = 'YourMovieName.tif';    % user input: movie file name (can contain the name of folder)
-sframe=1;						    % user input: first frame to read
-num2read=3000;					    % user input: number of frames to read
+movieFileName = 'demoMovie.tif';    % user input: movie file name (can contain the name of folder)
+sframe=1;			    % user input: first frame to read
+num2read=2000;			    % user input: number of frames to read
 int = 1:(num2read-sframe);          % user input: start frame and end frame to be processed (may want to restrict this due to memory issues.  If larger than number of frames, will be set to max frames)
 frameRate = 10;                     % user input: movie frame rate [fps]
 bitDepth = 16;                      % user input: bit depth of the movie
@@ -21,7 +21,7 @@ saturationValue = 2^bitDepth-1;     % user input: saturation pixel value of the 
 useROIList = 0;                    % user input: user input the centroid of ROI? No: 0, Yes: 1
 ROIListFileName = 0;               % user input: if userROIList==1, input xlsx file name of the ROI list (can contain the name of the folder). 
                                    % The file should contain two columns: x, y centroid of the ROI. This ROIListFile is not used if useROIList=0
-ROI_nr =100;                       % user input: if userROIList==0, input number of ROIs to be found                                   
+ROI_nr =30;                       % user input: if userROIList==0, input number of ROIs to be found                                   
 ROI_size = 8;                      % user input: maximum size of ROI in pixels (linear one dimension)
 ROI_sigma = 3;                     % user input: std of gaussian (size of ROIs,linear one dimension)               
 
