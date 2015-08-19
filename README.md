@@ -4,6 +4,8 @@ The CNMF code is written by Eftychios A. Pnevmatikakis and Liam Paninski, with i
 
 The demo script are written by Eftychios A. Pnevmatikakis, Liam Paninski, Weijian Yang and Darcy S. Peterka, 2015.
 
+Please first download and install cvx matlab package from http://cvxr.com/cvx/
+
 Use "demo_script2.m" to run the CNMF algorithm. "demoMovie.tif" is a calcium image movie for code demo.  
 
 Use "dataProcessing.m" to extract results after "demo_script2.m" is ran. 
